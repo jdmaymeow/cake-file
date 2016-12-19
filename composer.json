@@ -1,5 +1,5 @@
 {
-    "name": "your-name-here/CakeFile",
+    "name": "jdmaymeow/cake-file",
     "description": "CakeFile plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {
