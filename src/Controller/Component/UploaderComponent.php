@@ -26,6 +26,10 @@ class UploaderComponent extends Component
         'allowed' => ['png', 'jpg', 'jpeg']
     ];
 
+    /**
+     * @param null $file
+     * @return string
+     */
     public function upload($file = null) {
         $config = $this->config();
         $uploadDir = WWW_ROOT.$config['upload_domain'].DS.$config['upload_dir'];
