@@ -20,6 +20,7 @@ class UploaderComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [
+        'data_dir' => 'data',
         'upload_domain' => 'users', //for example controller name
         'upload_dir' => 'images', // folder where uploaded files will be stored
         'max_file_size' => 300, //TODO implement function for max file size
@@ -32,7 +33,7 @@ class UploaderComponent extends Component
      */
     public function upload($file = null) {
         $config = $this->config();
-        $uploadDir = WWW_ROOT.$config['upload_domain'].DS.$config['upload_dir'];
+        $uploadDir = WWW_ROOT . $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'];
         $this->_folderExists($uploadDir);
         $fileExtension = substr(strchr($file['name'], '.'), 1);
         if (in_array($fileExtension, $config['allowed'])) {
@@ -45,7 +46,7 @@ class UploaderComponent extends Component
             throw new InternalErrorException('Not allowed type of file, allowed are '.Text::toList($config['allowed']), 1);
         }
         //returning full upload link....
-        return $config['upload_domain'].DS.$config['upload_dir'].DS.$newFilename;
+        return $config['data_dir'] . DS . $config['upload_domain'].DS.$config['upload_dir'].DS.$newFilename;
     }
 
     /**
