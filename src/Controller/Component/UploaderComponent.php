@@ -40,11 +40,11 @@ class UploaderComponent extends Component
             if (is_uploaded_file($file['tmp_name'])) {
                 $newFilename = Text::uuid() . '.' . $fileExtension;
 
-                $subPath = getPathFromFileName($newFilename);
+                $subPath = $this->_getPathFromFileName($newFilename);
                 $fullPath = $uploadDir . DS . $subPath['path'];
                 $this->_folderExists($fullPath);
 
-                move_uploaded_file($file['tmp_name'], $fullPath . DS . $newFilename);
+                move_uploaded_file($file['tmp_name'], $fullPath . DS . $subPath['name']);
             }
         } else {
             $newFilename = 'not allowed';
@@ -65,7 +65,7 @@ class UploaderComponent extends Component
         }
     }
 
-    function getPathFromFileName($filename)
+    protected function _getPathFromFileName($filename)
     {
         return [
             'path' => substr($filename, 0, 2) . DS . substr($filename, 2, 2),
