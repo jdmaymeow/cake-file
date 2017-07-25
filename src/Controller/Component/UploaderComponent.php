@@ -51,7 +51,7 @@ class UploaderComponent extends Component
             throw new InternalErrorException('Not allowed type of file, allowed are '.Text::toList($config['allowed']), 1);
         }
         //returning full upload link....
-        return $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'] . DS . $subPath['path'] . DS . $newFilename;
+        return $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'] . DS . $subPath['path'] . DS . $subPath['name'];
     }
 
     /**
