@@ -33,7 +33,7 @@ class UploaderComponent extends Component
      */
     public function upload($file = null) {
         $config = $this->config();
-        $uploadDir = $config['data_dir'] . $config['upload_domain'] . DS . $config['upload_dir'];
+        $uploadDir = WWW_ROOT . $config['data_dir'] . DS .$config['upload_domain'] . DS . $config['upload_dir'];
         $this->_folderExists($uploadDir);
         $fileExtension = substr(strchr($file['name'], '.'), 1);
         if (in_array($fileExtension, $config['allowed'])) {
@@ -46,7 +46,7 @@ class UploaderComponent extends Component
             throw new InternalErrorException('Not allowed type of file, allowed are '.Text::toList($config['allowed']), 1);
         }
         //returning full upload link....
-        return $config['data_dir'] . DS . $config['upload_domain'].DS.$config['upload_dir'].DS.$newFilename;
+        return $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'] . DS . $newFilename;
     }
 
     /**
