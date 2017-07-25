@@ -34,19 +34,24 @@ class UploaderComponent extends Component
     public function upload($file = null) {
         $config = $this->config();
         $uploadDir = WWW_ROOT . $config['data_dir'] . DS .$config['upload_domain'] . DS . $config['upload_dir'];
-        $this->_folderExists($uploadDir);
+
         $fileExtension = substr(strchr($file['name'], '.'), 1);
         if (in_array($fileExtension, $config['allowed'])) {
             if (is_uploaded_file($file['tmp_name'])) {
-                $newFilename = Text::uuid().'.'.$fileExtension;
-                move_uploaded_file($file['tmp_name'], $uploadDir.DS.$newFilename);
+                $newFilename = Text::uuid() . '.' . $fileExtension;
+
+                $subPath = getPathFromFileName($newFilename);
+                $fullPath = $uploadDir . DS . $subPath['path'];
+                $this->_folderExists($fullPath);
+
+                move_uploaded_file($file['tmp_name'], $fullPath . DS . $newFilename);
             }
         } else {
             $newFilename = 'not allowed';
             throw new InternalErrorException('Not allowed type of file, allowed are '.Text::toList($config['allowed']), 1);
         }
         //returning full upload link....
-        return $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'] . DS . $newFilename;
+        return $config['data_dir'] . DS . $config['upload_domain'] . DS . $config['upload_dir'] . DS . $subPath['path'] . DS . $newFilename;
     }
 
     /**
@@ -58,5 +63,13 @@ class UploaderComponent extends Component
         if (!$folder->cd($folderPath)) {
             $folder->create($folderPath);
         }
+    }
+
+    function getPathFromFileName($filename)
+    {
+        return [
+            'path' => substr($filename, 0, 2) . DS . substr($filename, 2, 2),
+            'name' => substr($filename, 4)
+        ];
     }
 }
