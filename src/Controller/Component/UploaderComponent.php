@@ -20,7 +20,7 @@ class UploaderComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [
-        'data_dir' => USERS_DATA,
+        'data_dir' => 'user-data',
         'upload_domain' => 'users', //for example controller name
         'upload_dir' => 'images', // folder where uploaded files will be stored
         'max_file_size' => 300, //TODO implement function for max file size
